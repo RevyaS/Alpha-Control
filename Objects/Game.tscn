@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Objects/Components/Unit.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Controller/Game.cs" type="Script" id=2]
+[ext_resource path="res://Assets/Placeholders/SampleLevel.png" type="Texture" id=3]
+
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( 352, 368, 0, 368, -0.311623, -1.33807, 520, 0, 520, 176, 1024, 176, 1024, 600, 968, 600, 968, 328, 648, 328, 648, 600, 352, 600 )
+polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ), PoolIntArray( 5, 6, 7, 8 ), PoolIntArray( 4, 5, 8, 9 ), PoolIntArray( 0, 4, 9, 10, 11 ) ]
+outlines = [ PoolVector2Array( -0.311623, -1.33807, 520, 0, 520, 176, 1024, 176, 1024, 600, 968, 600, 968, 328, 648, 328, 648, 600, 352, 600, 352, 368, 0, 368 ) ]
+
+[node name="Game" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="Map" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Navigation2D" type="Navigation2D" parent="Map"]
+
+[node name="NavigationArea" type="NavigationPolygonInstance" parent="Map/Navigation2D"]
+navpoly = SubResource( 1 )
+
+[node name="Control" type="Node2D" parent="."]
+__meta__ = {
+"_editor_description_": "Controls the units it holds"
+}
+
+[node name="Sprite" parent="Control" instance=ExtResource( 1 )]
