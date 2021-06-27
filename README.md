@@ -7,7 +7,7 @@ Target Features for next version:
 * Movement system
   - [x] Moves toward point (Currently with Right Click)
   - [ ] Shows move path (Refer to Command & Conquer games)
-  - [ ] Smart positioning (Refer to Command & Conquer games)
+  - [ ] Smart positioning path for multiple units (Refer to Command & Conquer games)
   - [ ] Unit formations (Refer to Warcraft 3)
   - [ ] Hold position
   
@@ -20,7 +20,6 @@ Target Features for next version:
   - [ ] Hold fire / Open fire
   - [ ] Alert stance (Units rotate to maximize vision)
   - [ ] Charging stance (Units rotate towards move path)
-  - [ ] Formations
   
 * Game rules
   - [ ] Shooting accuracy is low when moving and high when holding position
