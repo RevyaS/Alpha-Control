@@ -22,11 +22,12 @@ public class Game : Control
 			// Check for Right Click then generate path
 			if(btn.ButtonIndex == 2) 
 			{
-				Navigation2D navigator = map.GetNode<Navigation2D>("Navigation2D");
 				foreach(Unit unit in controller.GetChildren())
 				{
 					// Generate path from unit to mouse position
+					Navigation2D navigator = map.GetNode<Navigation2D>("Nav");
 					Vector2[] path = navigator.GetSimplePath(unit.Position, btn.GlobalPosition);
+					//GD.Print(path == null);
 					unit.Move(path);
 				}
 
