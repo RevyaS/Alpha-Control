@@ -6,7 +6,7 @@ Version: 0.00001 Starting version /w placeholders
 Target Features for next version:
 * Movement system
   - [x] Moves toward point (Currently with Right Click)
-  - [ ] Shows move path (Refer to Command & Conquer games)
+  - [x] Shows move path (Refer to Command & Conquer games)
   - [ ] Smart positioning path for multiple units (Refer to Command & Conquer games)
   - [ ] Unit formations (Refer to Warcraft 3)
   - [ ] Hold position
@@ -25,3 +25,8 @@ Target Features for next version:
   - [ ] Shooting accuracy is low when moving and high when holding position
   - [ ] Units move faster in Charging stance and slower when on Alert
   - [ ] Units take more damage when reloading
+
+
+Changelog 7/3/21
+* Added collision to units
+* Added move path during move command
