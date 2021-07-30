@@ -18,3 +18,5 @@ shape = SubResource( 1 )
 
 [node name="PathGuide" type="Line2D" parent="."]
 width = 3.0
+
+[node name="Raycasts" type="Node" parent="."]

@@ -1,13 +1,17 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Objects/Components/Unit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Controller/Game.cs" type="Script" id=2]
 [ext_resource path="res://Assets/Placeholders/SampleLevel.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Placeholders/Black.png" type="Texture" id=4]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 336, 392, 0, 392, 0, 0, 536, 0, 536, 176, 1016, 176, 1016, 600, 952, 600, 952, 336, 664, 336, 664, 584, 336, 584 )
 polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ), PoolIntArray( 5, 6, 7, 8 ), PoolIntArray( 4, 5, 8, 9 ), PoolIntArray( 0, 4, 9, 10, 11 ) ]
 outlines = [ PoolVector2Array( 0, 0, 536, 0, 536, 176, 1016, 176, 1016, 600, 952, 600, 952, 336, 664, 336, 664, 584, 336, 584, 336, 392, 0, 392 ) ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 32, 136 )
 
 [node name="Game" type="Control"]
 anchor_right = 1.0
@@ -37,7 +41,23 @@ __meta__ = {
 }
 
 [node name="Area2D2" parent="Control" instance=ExtResource( 1 )]
-position = Vector2( 240, 144 )
+position = Vector2( 32, 144 )
 
 [node name="Area2D3" parent="Control" instance=ExtResource( 1 )]
-position = Vector2( 112, 184 )
+position = Vector2( 40, 208 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 280, 192 )
+
+[node name="Sprite" type="Sprite" parent="StaticBody2D"]
+scale = Vector2( -5.09744, 25.767 )
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
