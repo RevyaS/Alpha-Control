@@ -27,6 +27,9 @@ Target Features for next version:
   - [ ] Units take more damage when reloading
 
 
+Changelog 8/3/21
+* Trying out Git Merge feature by adding pull request for Enemy Detection System while waiting for Smart Positioning System, will update Changelog after merge
+
 Changelog 7/3/21
 * Added collision to units
 * Added move path during move command
