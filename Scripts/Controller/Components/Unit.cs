@@ -4,21 +4,74 @@ using GC = Godot.Collections;
 
 public class Unit : KinematicBody2D
 {
+	//Values
 	const float speed = 300;
 	Vector2 velocity = Vector2.Zero;
 
 	// Pathway when issued to Move
 	GC.Array<Vector2> vectorPath;
 	Line2D pathGuide;
-	
 	int pointsReached;
 	GC.Array<Vector2> guidePoints;
-	
+	// Components
+	Sprite sprite;
+	// Targets
+	Unit target;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		sprite = GetNode<Sprite>("Unit");
 		vectorPath = new GC.Array<Vector2>();pathGuide = GetNode<Line2D>("PathGuide");
 		SetProcess(false);
+	}
+	
+	
+	//Game loop in a different process
+	public override void _Process(float delta)
+	{
+		// Sync speed for this frame
+		float distance = speed * delta;
+
+		moveToPath(distance);
+
+		if(target != null)
+			aim(target);
+	}
+
+
+	// Unit detection
+	private void presenceDetected(object body)
+	{
+		GC.Array enemies = GetTree().GetNodesInGroup("Enemies");
+		
+		if(!enemies.Contains(body)) return;
+
+		GD.Print("Opp Detected");
+		if(target == null)
+			target = body as Unit;
+	}
+	
+	
+	// Unit exits
+	private void presenceExited(object body)
+	{
+		if(body as Unit != target) return;
+		
+		target = null;
+		sprite.Rotation = 0;
+	}
+
+
+	// Aims at target duh
+	private void aim(Unit target)
+	{
+		// Get euclidian distance
+		float deltaX = Position.x - target.Position.x;
+		float deltaY = Position.y - target.Position.y;
+		float angle = Mathf.Atan2(deltaY, deltaX) - (Mathf.Pi/2);
+		GD.Print(Mathf.Rad2Deg(angle));
+		sprite.Rotation = angle;
 	}
 
 
@@ -36,14 +89,6 @@ public class Unit : KinematicBody2D
 		pointsReached = 0;
 	}
 	
-	public override void _Process(float delta)
-	{
-		// Sync speed for this frame
-		float distance = speed * delta;
-
-		moveToPath(distance);
-	}
-
 
 	//Amount of distance to be travelled this frame
 	private void moveToPath(float distance)

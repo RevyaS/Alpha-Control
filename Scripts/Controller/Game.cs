@@ -13,6 +13,8 @@ public class Game : Control
 		map = GetNode<TextureRect>("Map");
 	}
 
+	
+	// Input callback
 	public override void _Input(InputEvent @event)
 	{
 		InputEvent ev = @event;
@@ -33,5 +35,6 @@ public class Game : Control
 
 			}
 		}
-	}	
+	}
+	
 }
