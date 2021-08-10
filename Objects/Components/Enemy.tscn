@@ -1,13 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Assets/Placeholders/UnitSprite.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Placeholders/UnitSpriteEn.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Controller/Components/Unit.cs" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 24.0
-
-[sub_resource type="CircleShape2D" id=2]
-radius = 232.138
 
 [node name="Area2D" type="KinematicBody2D"]
 script = ExtResource( 2 )
@@ -23,11 +20,3 @@ shape = SubResource( 1 )
 width = 3.0
 
 [node name="Raycasts" type="Node" parent="."]
-
-[node name="PresenceDetect" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PresenceDetect"]
-shape = SubResource( 2 )
-
-[connection signal="body_entered" from="PresenceDetect" to="." method="presenceDetected"]
-[connection signal="body_exited" from="PresenceDetect" to="." method="presenceExited"]
