@@ -1,0 +1,46 @@
+@startuml ClassDiagram
+Game o-- Map
+Game o-- Group
+Group "1" o-- "0..*" Unit
+
+class Unit {
+    ..Constants..
+    - speed: float
+    ..For Pathway..
+    - vectorPath: GC.Array<Vector2>
+    - pathGuid: Line2D
+    - pointsReached: int
+    ..For Detection..
+    - sprite: Sprite
+    - target: Unit
+    __
+    - presenceDetected(object): void
+    - presenseExited(object): void
+    - aim(Unit): void
+    + Move(Vector2[]): void
+    - moveToPath(float): void
+    ..Overrides..
+    + _Ready(): void
+    + _Process(): void 
+}
+
+class Group {
+    + Move(Vector2): void
+}
+
+class Game {
+    + {static} Map: Map
+    - controller: Group
+    ..Override Functions..
+    + _Input(): void
+    + _Ready(): void
+}
+
+class Map {
+    - navigator: Navigation2D
+    ..Override Functions..
+    + _Ready(): void
+    ..Getters..
+    + getNavigator(): Navigation2D
+}
+@enduml

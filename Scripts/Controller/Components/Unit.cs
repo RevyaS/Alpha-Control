@@ -6,13 +6,11 @@ public class Unit : KinematicBody2D
 {
 	//Values
 	const float speed = 300;
-	Vector2 velocity = Vector2.Zero;
 
 	// Pathway when issued to Move
 	GC.Array<Vector2> vectorPath;
 	Line2D pathGuide;
 	int pointsReached;
-	GC.Array<Vector2> guidePoints;
 	// Components
 	Sprite sprite;
 	// Targets
