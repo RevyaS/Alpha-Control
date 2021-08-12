@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scripts/Controller/Group.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Placeholders/RedDot.png" type="Texture" id=2]
+[ext_resource path="res://Objects/Components/Unit.tscn" type="PackedScene" id=3]
+
+[sub_resource type="LineShape2D" id=1]
+normal = Vector2( -0.970143, -0.242536 )
+
+[node name="Group" type="Node2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_editor_description_": "Controls the units it holds"
+}
+
+[node name="Units" type="Node2D" parent="."]
+
+[node name="Area2D2" parent="Units" instance=ExtResource( 3 )]
+position = Vector2( 32, 144 )
+
+[node name="Area2D3" parent="Units" instance=ExtResource( 3 )]
+position = Vector2( 40, 208 )
+
+[node name="Area2D4" parent="Units" instance=ExtResource( 3 )]
+position = Vector2( 120, 184 )
+
+[node name="Centroid" type="TextureRect" parent="."]
+visible = false
+margin_right = 20.0
+margin_bottom = 20.0
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MovementLine" type="Line2D" parent="."]
+visible = false
+position = Vector2( 200, 200 )
+points = PoolVector2Array( 200, 120, 248, -80 )
+width = 5.0
+
+[node name="Position2D" type="Position2D" parent="MovementLine"]
+position = Vector2( 232, -14 )
+__meta__ = {
+"_gizmo_extents_": 50.0
+}
+
+[node name="Position2D2" type="Position2D" parent="MovementLine"]
+position = Vector2( 216, 53 )
+__meta__ = {
+"_gizmo_extents_": 50.0
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MovementLine"]
+position = Vector2( 224, 0 )
+shape = SubResource( 1 )

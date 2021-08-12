@@ -4,21 +4,11 @@ using GC = Godot.Collections;
 
 public class Unit : KinematicBody2D
 {
-	//Values
-	const float speed = 300;
-
-	// Pathway when issued to Move
-	GC.Array<Vector2> vectorPath;
-	Line2D pathGuide;
-	int pointsReached;
-	// Components
-	Sprite sprite;
-	// Targets
-	Unit target;
-
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		radius = GetNode<CollisionShape2D>("UnitRadius");
+
 		sprite = GetNode<Sprite>("Unit");
 		vectorPath = new GC.Array<Vector2>();pathGuide = GetNode<Line2D>("PathGuide");
 		SetProcess(false);
@@ -127,4 +117,21 @@ public class Unit : KinematicBody2D
  			pathGuide.SetPointPosition(j, vectorPath[j-1] - Position );	
  		}
 	}
+
+	public float Radius{
+		get{return (radius.Shape as CircleShape2D).Radius + 10; }
+	}
+
+	//Values
+	const float speed = 300;
+	//Components
+	CollisionShape2D radius;
+	// Pathway when issued to Move
+	GC.Array<Vector2> vectorPath;
+	Line2D pathGuide;
+	int pointsReached;
+	// Components
+	Sprite sprite;
+	// Targets
+	Unit target;
 }

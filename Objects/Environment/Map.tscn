@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/Environment/Map.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Placeholders/SampleLevel.png" type="Texture" id=2]
+
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( 336, 392, 0, 392, 0, 0, 536, 0, 536, 176, 1016, 176, 1016, 600, 952, 600, 952, 336, 664, 336, 664, 584, 336, 584 )
+polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ), PoolIntArray( 5, 6, 7, 8 ), PoolIntArray( 4, 5, 8, 9 ), PoolIntArray( 0, 4, 9, 10, 11 ) ]
+outlines = [ PoolVector2Array( 0, 0, 536, 0, 536, 176, 1016, 176, 1016, 600, 952, 600, 952, 336, 664, 336, 664, 584, 336, 584, 336, 392, 0, 392 ) ]
+
+[node name="Map" type="TextureRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Nav" type="Navigation2D" parent="."]
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Nav"]
+navpoly = SubResource( 1 )

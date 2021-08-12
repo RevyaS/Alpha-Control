@@ -1,17 +1,14 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Objects/Components/Unit.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scripts/Controller/Game.cs" type="Script" id=2]
-[ext_resource path="res://Assets/Placeholders/SampleLevel.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Placeholders/SquareFormation.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Game.cs" type="Script" id=2]
+[ext_resource path="res://Objects/Environment/Map.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Placeholders/Black.png" type="Texture" id=4]
 [ext_resource path="res://Objects/Components/Enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Objects/Controller/Control.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Placeholders/SquareFormationSelected.png" type="Texture" id=7]
 
-[sub_resource type="NavigationPolygon" id=1]
-vertices = PoolVector2Array( 336, 392, 0, 392, 0, 0, 536, 0, 536, 176, 1016, 176, 1016, 600, 952, 600, 952, 336, 664, 336, 664, 584, 336, 584 )
-polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ), PoolIntArray( 5, 6, 7, 8 ), PoolIntArray( 4, 5, 8, 9 ), PoolIntArray( 0, 4, 9, 10, 11 ) ]
-outlines = [ PoolVector2Array( 0, 0, 536, 0, 536, 176, 1016, 176, 1016, 600, 952, 600, 952, 336, 664, 336, 664, 584, 336, 584, 336, 392, 0, 392 ) ]
-
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 136 )
 
 [node name="Game" type="Control"]
@@ -22,30 +19,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Map" type="TextureRect" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 3 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Map" parent="." instance=ExtResource( 3 )]
 
-[node name="Nav" type="Navigation2D" parent="Map"]
-
-[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Map/Nav"]
-navpoly = SubResource( 1 )
-
-[node name="Control" type="Node2D" parent="."]
-__meta__ = {
-"_editor_description_": "Controls the units it holds"
-}
-
-[node name="Area2D2" parent="Control" instance=ExtResource( 1 )]
-position = Vector2( 32, 144 )
-
-[node name="Area2D3" parent="Control" instance=ExtResource( 1 )]
-position = Vector2( 40, 208 )
+[node name="Control" parent="." instance=ExtResource( 6 )]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2( 280, 192 )
@@ -58,7 +34,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -69,3 +45,32 @@ __meta__ = {
 "Enemies",
 ] instance=ExtResource( 5 )]
 position = Vector2( 672, 272 )
+
+[node name="HUD" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Above" type="TextureRect" parent="HUD"]
+margin_right = 1024.0
+margin_bottom = 470.0
+rect_min_size = Vector2( 0, 470 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD"]
+margin_top = 474.0
+margin_right = 1024.0
+margin_bottom = 594.0
+
+[node name="SquareFormation" type="TextureButton" parent="HUD/HBoxContainer"]
+margin_right = 120.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 120, 120 )
+toggle_mode = true
+texture_normal = ExtResource( 1 )
+texture_pressed = ExtResource( 7 )
+expand = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
