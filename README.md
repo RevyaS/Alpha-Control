@@ -28,12 +28,11 @@ Target Features for next version:
 
 
 Changelog 
-8/11/21
+8/12/21
+* Added line formation but only for 3 units, still looking for heuristic to optimize target paths
+
+Prev:
 * Abstracted Map and Group class from Game and prepared class diagrams in PlantUML format
-
-8/3/21
 * Trying out Git Merge feature by adding pull request for Enemy Detection System while waiting for Smart Positioning System, will update Changelog after merge
-
-7/3/21
 * Added collision to units
 * Added move path during move command
