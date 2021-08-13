@@ -1,7 +1,11 @@
 @startuml ClassDiagram
-Game o-- Map
-Game o-- Group
-Group "1" o-- "0..*" Unit
+
+Game "1" o-- "1" Map
+Game o-- Formation
+Formation "1" o-- "0..*" Unit
+DataManager <.. Formation : Uses
+SortDelegates <-- "Sorts through" DataManager
+Group <|-- Formation
 
 class Unit {
     ..Constants..
@@ -24,13 +28,61 @@ class Unit {
     + _Process(): void 
 }
 
+class Formation {
+    - moveGuide: Line2D
+    __
+    - heuristicLineFormation(ref GC.Array<Unit>, ref GC.Array<Vector2>): void
+    - generateFormationLine(Vector2): GC.Array<Vector2>
+    ..Override Functions..
+    + _Ready(): void
+    + _Process(): void
+    + Move(): void
+}
+
 class Group {
-    + Move(Vector2): void
+    + {abstract} Move(Vector2): void
+    # centroid : Vector2
+    # largestRadius: float
+    # unitContainer: Node2D
+    # centroidTexture: TextureRect
+    # drawCentroid: bool
+    - totalPos: Vector2
+    __
+    # calculateCentroid(): void
+    ..Override Functions..
+    + _Ready(): void
+    + _Process(): void
+    ..Getters..
+    + getCentroid(): Vector2
+    + getUnitCount(): int
+}
+
+class SortDelegates {
+    + {static} IntDescending: SortDelegate
+    + {static} IntAscending: SortDelegate
+    + {static} Vector2Ascending: SortDelegate
+    + {static} UnitsPosAscending: SortDelegate
+    __
+    + SortDelegate(object, object): delegate object
+    ..Sort Functions..
+    - largerInt(object, object): object
+    - smallerInt(object, object): object
+    - smallerVector2(object, object): object
+    - leftmostUnit(object, object): object
+    ..Override Functions..
+    + _Ready(): void
+}
+
+class DataManager {
+    + {static} MergeSort(ref GC.Array, SortDelegates.SortDelegate): void
+    - {static} MergeSor(ref GC.Array, int, int, SortDelegates.SortDelegate): void
+    - {static} Merge(reg GC.Array, int, int, int, Delegate): void
 }
 
 class Game {
     + {static} Map: Map
     - controller: Group
+    - lineFormationToggle: TextureButton
     ..Override Functions..
     + _Input(): void
     + _Ready(): void

@@ -74,3 +74,5 @@ expand = true
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
+
+[connection signal="toggled" from="HUD/HBoxContainer/SquareFormation" to="." method="buttonToggled"]

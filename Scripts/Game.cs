@@ -3,22 +3,23 @@ using System;
 
 public class Game : Control
 {
-	Group controller;
-	bool acceptInput = true;
-	public static Map Map;
-
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
-	{
-		timer = GetNode<Timer>("Timer");
-		timer.Connect("timeout", this, nameof(resetInputFlag));
-		
-		controller = GetNode<Group>("Control");
+	{		
+		controller = GetNode<Formation>("Control");
 		Map = GetNode<Map>("Map");
+
+		//HUD
+		lineFormationToggle = GetNode<TextureButton>("HUD/HBoxContainer/SquareFormation");
 	}
 
+	//Button Triggered
+	private void buttonToggled(bool toggle)
+	{
+		controller.formationOn = toggle;
+	}
 	
-	// Input callback
+	// Input call
 	public override void _Input(InputEvent @event)
 	{
 		InputEvent ev = @event;
@@ -28,11 +29,7 @@ public class Game : Control
 			// Check for Right Click then generate path
 			if(btn.ButtonIndex == 2) 
 			{
-				//Only allow 1 input for every separate time
-				if(!acceptInput) return;
-				
-				acceptInput = false;
-				timer.Start();
+				if(ev.IsPressed()) return;
 
 				GD.Print("Move Issued");
 				controller.Move(btn.GlobalPosition);
@@ -41,12 +38,8 @@ public class Game : Control
 	}
 
 
-	
-	//Resets input flag
-	private void resetInputFlag()
-	{
-		acceptInput = true;
-	}
-
-	Timer timer;
+	Formation controller;
+	public static Map Map;
+	//HUD
+	TextureButton lineFormationToggle;
 }

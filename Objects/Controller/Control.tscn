@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Scripts/Controller/Group.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Controller/Formation.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Placeholders/RedDot.png" type="Texture" id=2]
 [ext_resource path="res://Objects/Components/Unit.tscn" type="PackedScene" id=3]
 

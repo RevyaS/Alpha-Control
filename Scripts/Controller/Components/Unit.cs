@@ -58,7 +58,6 @@ public class Unit : KinematicBody2D
 		float deltaX = Position.x - target.Position.x;
 		float deltaY = Position.y - target.Position.y;
 		float angle = Mathf.Atan2(deltaY, deltaX) - (Mathf.Pi/2);
-		GD.Print(Mathf.Rad2Deg(angle));
 		sprite.Rotation = angle;
 	}
 
