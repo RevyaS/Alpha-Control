@@ -1,7 +1,7 @@
 # Alpha-Control
 Command a squad without direct control to accomplish missions
 
-Version: 0.00001 Starting version /w placeholders
+Version: 0.0001 Starting version /w placeholders
 
 Target Features for next version:
 * Movement system
@@ -25,14 +25,3 @@ Target Features for next version:
   - [ ] Shooting accuracy is low when moving and high when holding position
   - [ ] Units move faster in Charging stance and slower when on Alert
   - [ ] Units take more damage when reloading
-
-
-Changelog 
-8/12/21
-* Added line formation but only for 3 units, still looking for heuristic to optimize target paths
-
-Prev:
-* Abstracted Map and Group class from Game and prepared class diagrams in PlantUML format
-* Trying out Git Merge feature by adding pull request for Enemy Detection System while waiting for Smart Positioning System, will update Changelog after merge
-* Added collision to units
-* Added move path during move command
