@@ -8,7 +8,7 @@ Target Features for next version:
   - [x] Moves toward point (Currently with Right Click)
   - [x] Shows move path (Refer to Command & Conquer games)
   - [ ] Smart positioning path for multiple units (Refer to Command & Conquer games)
-  - [ ] Unit formations (Refer to Warcraft 3)
+  - [ ] Unit formations (Refer to Warcraft 3) (Currently Line Formation)
   - [ ] Hold position
   
 * Shooting system
