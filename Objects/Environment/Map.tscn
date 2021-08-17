@@ -22,3 +22,5 @@ __meta__ = {
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Nav"]
 navpoly = SubResource( 1 )
+
+[node name="BulletList" type="Node2D" parent="."]

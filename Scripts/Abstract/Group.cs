@@ -7,7 +7,14 @@ public abstract class Group : Node2D
     public override void _Ready()
     {
 		centroidTexture = GetNode<TextureRect>("Centroid");
-    }
+	}
+
+	public override string _GetConfigurationWarning()
+	{
+		if(unitContainer == null)
+			return "Required Node2D Child that stores the Units";
+		return "";
+	}
 
     public override void _Process(float delta)
     {

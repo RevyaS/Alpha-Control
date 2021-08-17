@@ -1,5 +1,15 @@
 v.0001
+8/17/21
+* Fixed heuristic of line formation
+* Added fire button and fire system
+* Units now rotate on location
+* Added SceneManager Singleton
+* Added UtilityFunctions Singleton
+* Code documentations
+
 8/11/21
+* Abstracted Group into Formation class inheriting abstract class Group
+	to separate general group behavior and formation behaviors
 * Added Singleton DataManager that handles data structure processing
 * Added toggle button for Line Formation
 * Added SortingDelegates class that handles custom sorting methods for 

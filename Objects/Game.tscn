@@ -1,12 +1,14 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Assets/Placeholders/SquareFormation.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Game.cs" type="Script" id=2]
 [ext_resource path="res://Objects/Environment/Map.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Placeholders/Black.png" type="Texture" id=4]
-[ext_resource path="res://Objects/Components/Enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Objects/Controller/Components/Enemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Objects/Controller/Control.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Assets/Placeholders/SquareFormationSelected.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Placeholders/ShootOpenFire.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Placeholders/ShootHoldFire.png" type="Texture" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 136 )
@@ -72,7 +74,15 @@ texture_normal = ExtResource( 1 )
 texture_pressed = ExtResource( 7 )
 expand = true
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.1
+[node name="Shoot" type="TextureButton" parent="HUD/HBoxContainer"]
+margin_left = 124.0
+margin_right = 244.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 120, 120 )
+toggle_mode = true
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+expand = true
 
-[connection signal="toggled" from="HUD/HBoxContainer/SquareFormation" to="." method="buttonToggled"]
+[connection signal="toggled" from="HUD/HBoxContainer/SquareFormation" to="." method="buttonToggled" binds= [ 0 ]]
+[connection signal="toggled" from="HUD/HBoxContainer/Shoot" to="." method="buttonToggled" binds= [ 1 ]]

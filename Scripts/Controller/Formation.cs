@@ -26,7 +26,10 @@ public class Formation : Group
 	public override void Move(Vector2 targetPosition)
 	{
 		if(moveGuide != null)
+		{
 			moveGuide.QueueFree();
+			moveGuide = null;
+		}
 
 		// Generate path from unit to mouse position
 		Navigation2D navigator = Game.Map.GetNode<Navigation2D>("Nav");
@@ -36,8 +39,13 @@ public class Formation : Group
 		{
 			//Preffered positions
 			prefPos = generateFormationLine(targetPosition);
-			
-			heuristicLineFormation(ref units, ref prefPos);
+			float minAngle = Mathf.Abs(UtilityFunctions.angleRadianReference(formationLineAngle));
+			bool isHorizontal = (Mathf.Deg2Rad(45) < minAngle && minAngle < Mathf.Deg2Rad(135)) ? false :
+				((Mathf.Deg2Rad(225) < minAngle && minAngle < Mathf.Deg2Rad(315)) ? false : true);
+			GD.Print(Mathf.Rad2Deg(minAngle));
+			GD.Print((Mathf.Deg2Rad(45) < minAngle && minAngle < Mathf.Deg2Rad(135)));
+			GD.Print("Horizontal? " + isHorizontal);
+			heuristicLineFormation(ref units, ref prefPos, isHorizontal);
 		}
 
 		for(int i = 0; i < unitContainer.GetChildCount(); i++)
@@ -58,10 +66,9 @@ public class Formation : Group
 		float totalLength = largestRadius * UnitCount;
 		//Get reference angle from centroid to targetPosition
 		float distance = centroid.DistanceTo(targetPosition);
-		float angle = Mathf.Pi/2 - centroid.AngleToPoint(targetPosition);
+		formationLineAngle = Mathf.Pi/2 - centroid.AngleToPoint(targetPosition);
 		//Create vector of distance from targetPosition to an endpoint
-		Vector2 delta = new Vector2(Mathf.Cos(angle), -Mathf.Sin(angle)) * totalLength;
-
+		Vector2 delta = new Vector2(Mathf.Cos(formationLineAngle), -Mathf.Sin(formationLineAngle)) * totalLength;
 		Vector2 top = targetPosition + delta;
 		Vector2 bot = targetPosition - delta;
 		moveGuide = new Line2D();
@@ -72,7 +79,8 @@ public class Formation : Group
 		AddChild(moveGuide);
 
 		//1st Pos (outer distance)
-		Vector2 div = new Vector2(top.x - bot.x, top.y - bot.y)/UnitCount;
+		//Vector2 div = new Vector2(top.x - bot.x, top.y - bot.y)/UnitCount;
+		Vector2 div = (top-bot)/UnitCount;
 		GC.Array<Vector2> unitPos = new GC.Array<Vector2>();
 		if(GetChildCount() == 1) {
 			unitPos.Add(targetPosition);
@@ -91,13 +99,36 @@ public class Formation : Group
 
 
 	//Sorts the array of units or positions to match each other
-	private void heuristicLineFormation(ref GC.Array<Unit> units, ref GC.Array<Vector2> prefPositions)
+	private void heuristicLineFormation(ref GC.Array<Unit> units, ref GC.Array<Vector2> prefPositions, bool isHorizontal)
 	{
 		//Sort units by lesser x & y
-		units = new GC.Array<Unit>(DataManager.MergeSort((GC.Array)units, SortDelegates.UnitsPosAscending));
-		prefPositions = new GC.Array<Vector2>(DataManager.MergeSort((GC.Array)prefPositions, SortDelegates.Vector2Ascending));
+		SortDelegates.SortDelegate unitSort = SortDelegates.UnitsPosYAscending, 
+								   positionSort = SortDelegates.Vector2YAscending;
+		if(isHorizontal)
+		{
+			unitSort = SortDelegates.UnitsPosXAscending;
+			positionSort = SortDelegates.Vector2XAscending;
+		}
+
+		units = new GC.Array<Unit>(DataManager.MergeSort((GC.Array)units, unitSort));
+		prefPositions = new GC.Array<Vector2>(DataManager.MergeSort((GC.Array)prefPositions, positionSort));
+	}
+
+	public bool OpenFire {
+		set
+		{
+			openFire = value;
+			foreach (Unit unit in unitContainer.GetChildren())
+			{
+				unit.openFire = value;
+			}
+		}
+		get { return openFire; }
 	}
 
 	Line2D moveGuide;
+	float formationLineAngle = 0;
+
 	public bool formationOn = false;
+	bool openFire = false;
 }

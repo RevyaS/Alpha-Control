@@ -13,10 +13,20 @@ public class Game : Control
 		lineFormationToggle = GetNode<TextureButton>("HUD/HBoxContainer/SquareFormation");
 	}
 
+	private enum ButtonTypes {FormationButton, AttackToggle};
+
 	//Button Triggered
-	private void buttonToggled(bool toggle)
+	private void buttonToggled(bool toggle, ButtonTypes buttonType)
 	{
-		controller.formationOn = toggle;
+		switch(buttonType)
+		{
+			case ButtonTypes.FormationButton:
+				controller.formationOn = toggle;
+				break;
+			case ButtonTypes.AttackToggle:
+				controller.OpenFire = toggle;
+				break;
+		}
 	}
 	
 	// Input call
@@ -37,8 +47,16 @@ public class Game : Control
 		}
 	}
 
+	public static void addBullet(Vector2 pos, Bullet bullet)
+	{
+		Map.addBullet(pos, bullet);
+	}
+
 
 	Formation controller;
+	/// <summary>
+	///Current Map used in game
+	/// </summary>
 	public static Map Map;
 	//HUD
 	TextureButton lineFormationToggle;

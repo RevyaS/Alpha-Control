@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/Controller/Formation.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Placeholders/RedDot.png" type="Texture" id=2]
-[ext_resource path="res://Objects/Components/Unit.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Objects/Controller/Components/Unit.tscn" type="PackedScene" id=3]
 
 [sub_resource type="LineShape2D" id=1]
 normal = Vector2( -0.970143, -0.242536 )
@@ -16,13 +16,13 @@ __meta__ = {
 [node name="Units" type="Node2D" parent="."]
 
 [node name="Area2D2" parent="Units" instance=ExtResource( 3 )]
-position = Vector2( 32, 144 )
+position = Vector2( 88.8486, 206.372 )
 
 [node name="Area2D3" parent="Units" instance=ExtResource( 3 )]
-position = Vector2( 40, 208 )
+position = Vector2( 124.808, 288.779 )
 
 [node name="Area2D4" parent="Units" instance=ExtResource( 3 )]
-position = Vector2( 120, 184 )
+position = Vector2( 207.215, 206.372 )
 
 [node name="Centroid" type="TextureRect" parent="."]
 visible = false
@@ -55,3 +55,5 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MovementLine"]
 position = Vector2( 224, 0 )
 shape = SubResource( 1 )
+
+[node name="BulletList" type="Node2D" parent="."]

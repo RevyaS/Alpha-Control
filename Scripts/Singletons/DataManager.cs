@@ -7,13 +7,21 @@ using GC = Godot.Collections;
 */
 public class DataManager : Node
 {
-    //General MergeSort function
+    /// <summary>
+    ///General MergeSort Function
+    /// </summary>
+    /// <param name="list">Array to be sorted</param>
+    /// <param name="comparisonFunction">A static variable from SortDelegates 
+    /// class that determines how two variables are compared</param>
+    /// <returns>Sorted Array</returns>
     public static GC.Array MergeSort(GC.Array list, SortDelegates.SortDelegate comparisonFunction)
     {
         MergeSort(ref list, 0, list.Count -1, comparisonFunction);
         return list;
     }
 
+
+    //Recursive MergeSort
     static void MergeSort(ref GC.Array list, int startIndex, int endIndex, SortDelegates.SortDelegate comparisonFunction)
     {
         if(startIndex >= endIndex) return;
@@ -24,6 +32,7 @@ public class DataManager : Node
     }
 
 
+    //Merge function of MergeSort()
     static void Merge(ref GC.Array list, int startIndex, int midIndex, int endIndex, Delegate comparisonFunction)
     {
         //3 pointers
