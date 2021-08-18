@@ -1,7 +1,7 @@
 # Alpha-Control
 Command a squad without direct control to accomplish missions
 
-Version: 0.0001 Starting version /w placeholders
+Version: 0.0005 Starting version /w placeholders
 
 Target Features for next version:
 * Movement system
@@ -12,12 +12,11 @@ Target Features for next version:
   - [ ] Hold position
   
 * Shooting system
-  - [ ] Shooting opponents on sight
   - [ ] Sight system per unit 
   - [ ] Reload system
   
 * Behavior system
-  - [ ] Hold fire / Open fire
+  - [x] Hold fire / Open fire
   - [ ] Alert stance (Units rotate to maximize vision)
   - [ ] Charging stance (Units rotate towards move path)
   
