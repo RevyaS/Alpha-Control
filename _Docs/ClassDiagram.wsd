@@ -1,35 +1,36 @@
 @startuml ClassDiagram
 
 Game "1" o-- "1" Map
-Game o-- Formation
+Game <.. Unit: Register Bullets
+Unit --> StatesEnum
+Unit ..> UtilityFunctions: Uses
+Unit ..> SceneManager: Uses
+Bullet <-- Unit: Generates
+ButtonTypes <-- Game
 Formation "1" o-- "0..*" Unit
-DataManager <.. Formation : Uses
-SortDelegates <-- "Sorts through" DataManager
-Group <|-- Formation
+DataManager "Sorts through" --> SortDelegates
+Formation --o Game
+Formation --|> Group
+DataManager <.. "Uses" Formation
 
-class Unit {
-    ..Constants..
-    - speed: float
-    ..For Pathway..
-    - vectorPath: GC.Array<Vector2>
-    - pathGuid: Line2D
-    - pointsReached: int
-    ..For Detection..
-    - sprite: Sprite
-    - target: Unit
+Formation ..> UtilityFunctions: Uses
+Bullet <.. Map: Shows
+
+
+class Bullet {
+    - range: float
+    - velocity: Vector2
     __
-    - presenceDetected(object): void
-    - presenseExited(object): void
-    - aim(Unit): void
-    + Move(Vector2[]): void
-    - moveToPath(float): void
-    ..Overrides..
-    + _Ready(): void
-    + _Process(): void 
+    + Init(float, Vector2): void
+    ..Override Functions..
+    + _Process(float): void
 }
 
 class Formation {
+    - formationLineAngle: float
     - moveGuide: Line2D
+    - openFire: bool
+    + formationOn: bool
     __
     - heuristicLineFormation(ref GC.Array<Unit>, ref GC.Array<Vector2>): void
     - generateFormationLine(Vector2): GC.Array<Vector2>
@@ -37,9 +38,27 @@ class Formation {
     + _Ready(): void
     + _Process(): void
     + Move(): void
+    ..Getters..
+    + isOpenFire(): bool
 }
 
-class Group {
+class SceneManager <<(S, #90AD94) Singleton>> {
+    + {static} GetSceneInstance(): object
+}
+
+class Game <<(S, #90AD94) Singleton>> {
+    + {static} Map: Map
+    - controller: Formation
+    - lineFormationToggle: TextureButton
+    __
+    + {static} addBullet(Vector2, Bullet): void
+    - buttonToggled(bool, ButtonTypes): void
+    ..Override Functions..
+    + _Input(): void
+    + _Ready(): void
+}
+
+abstract class Group {
     + {abstract} Move(Vector2): void
     # centroid : Vector2
     # largestRadius: float
@@ -57,39 +76,90 @@ class Group {
     + getUnitCount(): int
 }
 
-class SortDelegates {
+enum StatesEnum {
+    Walking
+    Aiming
+}
+
+class Unit {
+    - atkCooldown: float
+    - targetAngle: float
+    - state: StatesEnum
+    - radius: float
+    + openFire: bool
+    ..Components..
+    - radius: CollisionShape2D
+    - tween: Tween
+    ..Constants..
+    - speed: float
+    - range: float
+    - rotationSpeed: float
+    - bulletSpeed: float
+    - atkSpeed: float
+    - bulletScene: String
+    ..For Pathway..
+    - vectorPath: GC.Array<Vector2>
+    - pathGuide: Line2D
+    - pointsReached: int
+    ..For Detection..
+    - sprite: Sprite
+    - target: Unit
+    __
+    - presenceDetected(object): void
+    - presenseExited(object): void
+    - aim(Unit): void
+    - aim(Vector2): void
+    - Shoot(): void
+    - rotate(float): void
+    + Move(Vector2[]): void
+    - moveToPath(float): void
+    ..Overrides..
+    + _Ready(): void
+    + _Process(): void 
+    ..Getters..
+    + getRadius(): float
+}
+
+class SortDelegates <<(S, #90AD94) Singleton>> {
     + {static} IntDescending: SortDelegate
     + {static} IntAscending: SortDelegate
-    + {static} Vector2Ascending: SortDelegate
-    + {static} UnitsPosAscending: SortDelegate
+    + {static} Vector2XAscending: SortDelegate
+    + {static} Vector2YAscending: SortDelegate
+    + {static} UnitsPosXAscending: SortDelegate
+    + {static} UnitsPosYAscending: SortDelegate
     __
     + SortDelegate(object, object): delegate object
     ..Sort Functions..
     - largerInt(object, object): object
     - smallerInt(object, object): object
-    - smallerVector2(object, object): object
+    - smallerXVector2(object, object): object
+    - smallerYVector2(object, object): object
     - leftmostUnit(object, object): object
+    - bottommostUnit(object, object): object
     ..Override Functions..
     + _Ready(): void
 }
 
-class DataManager {
-    + {static} MergeSort(ref GC.Array, SortDelegates.SortDelegate): void
+class DataManager <<(S, #90AD94) Singleton>> {
+    + {static} MergeSort(ref GC.Array, SortDelegates.SortDelegate): GC.Array
     - {static} MergeSor(ref GC.Array, int, int, SortDelegates.SortDelegate): void
-    - {static} Merge(reg GC.Array, int, int, int, Delegate): void
+    - {static} Merge(ref GC.Array, int, int, int, Delegate): void
 }
 
-class Game {
-    + {static} Map: Map
-    - controller: Group
-    - lineFormationToggle: TextureButton
-    ..Override Functions..
-    + _Input(): void
-    + _Ready(): void
+class UtilityFunctions <<(S, #90AD94) Singleton>> {
+    + {static} angleRadianReference(float): float
+}
+
+enum ButtonTypes {
+    FormationButton
+    AttackToggle
 }
 
 class Map {
+    - bulletList: Node2D
     - navigator: Navigation2D
+    __
+    + addBullet(Vector2, Bullet)
     ..Override Functions..
     + _Ready(): void
     ..Getters..
