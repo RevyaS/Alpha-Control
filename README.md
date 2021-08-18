@@ -19,6 +19,7 @@ Target Features for next version:
   - [x] Hold fire / Open fire
   - [ ] Alert stance (Units rotate to maximize vision)
   - [ ] Charging stance (Units rotate towards move path)
+  - [ ] Unit State System
   
 * Game rules
   - [ ] Shooting accuracy is low when moving and high when holding position
